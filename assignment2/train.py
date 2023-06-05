@@ -79,7 +79,7 @@ class Trainer:
         # TODO: Initialize the DistributedDataParallel wrapper for the model. 
         # You would need to pass the model and specify the device IDs
         # and output device for the data parallelism.
-        self.model = torch.nn.parallel.DistributedDataParallel(self.model, device_ids = self.gpu_id, output_device = self.gpu_id) ### YOUR CODE HERE ###
+        self.model = torch.nn.parallel.DistributedDataParallel(self.model, device_ids = [self.gpu_id], output_device = self.gpu_id) ### YOUR CODE HERE ###
 
         
     def _run_batch(self, batch):
@@ -317,7 +317,7 @@ if __name__ == "__main__":
     size_valid_set = 0.1
     max_length = 256
     num_epochs = 10
-    batch_size = 2
+    batch_size = 4
     gradient_accumulation_steps = 16
 
     learning_rate = 3e-4
@@ -330,7 +330,7 @@ if __name__ == "__main__":
     eval_freq = 150
     
     # TODO: Choose strategy
-    distributed_strategy = "no" ### YOUR CODE HERE ###
+    distributed_strategy = "ddp" ### YOUR CODE HERE ###
     
     if distributed_strategy  == "ddp":
         # TODO: Initialize the process group for distributed data parallelism with nccl backend.
